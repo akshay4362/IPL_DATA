@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Hello Express</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+
+</head>
+
+<body>
+    <button onclick="totalmatches()">Num of matches played by all teams </button>
+    <button onclick="matchesperseasonplayed()">Winners per Season</button>
+    <div></div>
+
+    <script>
+        function totalmatches() {
+            $.ajax({
+                url: "http://localhost:3000/numofmatchesplayed", // the local Node server
+                //method: 'GET',
+                success: function (data) {
+                    console.log(data)
+                    let years = Object.keys(data)
+                    let matches = Object.values(data)
+                    // draw chart
+                    $('div').highcharts({
+                        chart: {
+                            type: "bar"
+                        },
+                        title: {
+                            text: "IPL Matches"
+                        },
+                        xAxis: {
+                            categories: years,
+                            type: 'category',
+                            allowDecimals: false,
+                            title: {
+                                text: "Years"
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: "matches"
+                            }
+                        },
+                        series: [{
+                            name: 'Matches Won',
+                            data: matches
+                        }]
+                    });
+                }
+            })
+        }
+
+        // fetch("http://localhost:3000").then(response => response.text()).then(data => $('div').text(data))
+        function matchesperseasonplayed() {
+            $.ajax({
+                url: "http://localhost:3000/matchesperseason", // the local Node server
+                //method: 'GET',
+                success: function (data) {
+                    console.log(data)
+                    let season = Object.keys(data)
+                    let seasonwins = Object.values(data)
+                    // draw chart
+                    $('div').highcharts({
+                        chart: {
+                            type: 'bar'
+                        },
+                        title: {
+                            text: 'Stacked bar chart'
+                        },
+                        xAxis: {
+                            categories:season,
+                            type: 'category',
+                            allowDecimals: false,
+                            title: {
+                                text: "season"
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: "matches"
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: "Team Names"
+                            }
+                        },
+                        legend: {
+                            reversed: true
+                        },
+                        plotOptions: {
+                            series: {
+                                stacking: 'normal'
+                            }
+                        },
+                        series: [{
+                            name: "total wins per season",
+                            data:seasonwins
+                        }]
+
+                    });
+                }
+            })
+
+        }
+    </script>
+</body>
+
+</html>
