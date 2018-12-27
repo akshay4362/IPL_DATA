@@ -3,17 +3,19 @@ var app = express()
 var cors = require('cors')
 var serveStatic = require('serve-static')
 
-const matches = require('../matches.json')
-const deliveries = require('../deliveries.json')
-var numOfMatchesPlayed = require('../server/totalmatchesplayed')
-var matchesperseason =require('./winsperseason')
-var extrarunsin2016 = require('./extraruns.js')
-var ecnomicbowler=require("./ecnomic.js")
+const matches = require('./jsonData/matches.json')
+const deliveries = require('./jsonData/deliveries.json')
+// var numOfMatchesPlayed = require('../server/totalmatchesplayed')
+var numOfMatchesPlayed = require('./jsFiles/totalmatchesplayed')
+var matchesperseason =require('./jsFiles/winsperseason')
+var extrarunsin2016 = require('./jsFiles/extraruns')
+var ecnomicbowler=require("./jsFiles/ecnomic")
 const port = 3000;
 app.use(cors());
 app.use(express.static(__dirname +'/../client'))
 // console.log(deliveries)
 app.get('/numofmatchesplayed', (req, res) => res.send(numOfMatchesPlayed.get(matches)));
+// console.log(numOfMatchesPlayed.get(matches))
 // console.log(matchesperseason.get(matches))
 app.get('/matchesperseason', (req, res) => res.send(matchesperseason.get(matches)));
 app.get('/extrarunsin2016',(req,res) =>res.send(extrarunsin2016.get(matches,deliveries)));
