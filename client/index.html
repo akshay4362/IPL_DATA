@@ -6,17 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Hello Express</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
 </head>
 
 <body>
     <button onclick="totalmatches()">Num of matches played by all teams </button>
     <button onclick="matchesperseasonplayed()">Winners per Season</button>
+    <button onclick="extrarunsin2016()">extrarunsin 2016</button>
+    <button onclick="ecnomicbowler()">Top Ecnomic Bowler</button>
+
     <div></div>
 
     <script>
+totalmatches()
         function totalmatches() {
             $.ajax({
                 url: "http://localhost:3000/numofmatchesplayed", // the local Node server
@@ -47,7 +50,7 @@
                             }
                         },
                         series: [{
-                            name: 'Matches Won',
+                            name: 'Total matches',
                             data: matches
                         }]
                     });
@@ -62,8 +65,8 @@
                 //method: 'GET',
                 success: function (data) {
                     console.log(data)
-                    let season = Object.keys(data)
-                    let seasonwins = Object.values(data)
+                    let xaxis = Object.keys(data)
+                    let yaxis = Object.values(data)
                     // draw chart
                     $('div').highcharts({
                         chart: {
@@ -73,7 +76,7 @@
                             text: 'Stacked bar chart'
                         },
                         xAxis: {
-                            categories:season,
+                            categories:xaxis,
                             type: 'category',
                             allowDecimals: false,
                             title: {
@@ -100,13 +103,90 @@
                         },
                         series: [{
                             name: "total wins per season",
-                            data:seasonwins
+                            data:yaxis
                         }]
 
                     });
                 }
             })
 
+        }
+
+        function extrarunsin2016() {
+            $.ajax({
+                url: "http://localhost:3000/extrarunsin2016", // the local Node server
+                //method: 'GET',
+                success: function (data) {
+                    console.log(data)
+                    let teams = Object.keys(data)
+                    let extraruns = Object.values(data)
+                    // draw chart
+                    $('div').highcharts({
+                        chart: {
+                            type: "bar"
+                        },
+                        title: {
+                            text: "IPL Matches"
+                        },
+                        xAxis: {
+                            categories: teams,
+                            type: 'category',
+                            allowDecimals: false,
+                            title: {
+                                text: "Team Name"
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: "matches"
+                            }
+                        },
+                        series: [{
+                            name: 'total ExtraRuns',
+                            data: extraruns
+                        }]
+                    });
+                }
+            })
+        }
+
+
+        function ecnomicbowler() {
+            $.ajax({
+                url: "http://localhost:3000/ecnomicbowler", // the local Node server
+                //method: 'GET',
+                success: function (data) {
+                    console.log(data)
+                    let bowler = Object.keys(data)
+                    let economy = Object.values(data)
+                    // draw chart
+                    $('div').highcharts({
+                        chart: {
+                            type: "bar"
+                        },
+                        title: {
+                            text: "IPL Matches"
+                        },
+                        xAxis: {
+                            categories:bowler,
+                            type: 'category',
+                            allowDecimals: false,
+                            title: {
+                                text: "bowler name"
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: "Top Economy"
+                            }
+                        },
+                        series: [{
+                            name: 'top economic bowler',
+                            data: economy
+                        }]
+                    });
+                }
+            })
         }
     </script>
 </body>

@@ -1,6 +1,5 @@
 module.exports = {
     get: function (matches) {
-
         let winnersTeam = {};
         matches.forEach((obj) => {
             if (winnersTeam[obj.season] == undefined) {
@@ -13,12 +12,15 @@ module.exports = {
             }
 
         })
-       // for(let i in winnersTeam)
-       // winnersTeam[i] = parseInt(winnersTeam[i])
-        console.log(winnersTeam);
+        // for(let i in winnersTeam)
+        // winnersTeam[i] = parseInt(winnersTeam[i])
+        
+        // console.log(winnersTeam);
+        // let x=Object.keys(winnersTeam);
+        // let y = Object.values(winnersTeam);
+        // return console.log(y);
+        return winnersTeam[i]
 
-        return winnersTeam;
-     
 
     }
 }
