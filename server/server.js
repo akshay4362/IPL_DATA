@@ -15,6 +15,7 @@ app.use(cors());
 app.use(express.static(__dirname +'/../client'))
 // console.log(deliveries)
 app.get('/numofmatchesplayed', (req, res) => res.send(numOfMatchesPlayed.get(matches)));
+// console.log(numOfMatchesPlayed.get(matches))
 // console.log(matchesperseason.get(matches))
 app.get('/matchesperseason', (req, res) => res.send(matchesperseason.get(matches)));
 app.get('/extrarunsin2016',(req,res) =>res.send(extrarunsin2016.get(matches,deliveries)));
