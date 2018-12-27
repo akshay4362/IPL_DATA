@@ -5,190 +5,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Hello Express</title>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
+    <title>Express</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="js/script.js"></script>
 </head>
 
 <body>
-    <button onclick="totalmatches()">Num of matches played by all teams </button>
-    <button onclick="matchesperseasonplayed()">Winners per Season</button>
-    <button onclick="extrarunsin2016()">extrarunsin 2016</button>
-    <button onclick="ecnomicbowler()">Top Ecnomic Bowler</button>
+    <button class="button " onclick="totalmatches()" autofocus>Num of matches played by all teams </button>
+    <button class="button" onclick="matchesperseasonplayed()">Winners per Season</button>
+    <button class="button" onclick="extrarunsin2016()">extrarunsin 2016</button>
+    <button class="button" onclick="ecnomicbowler()">Top Ecnomic Bowler</button>
 
     <div></div>
 
-    <script>
-totalmatches()
-        function totalmatches() {
-            $.ajax({
-                url: "http://localhost:3000/numofmatchesplayed", // the local Node server
-                //method: 'GET',
-                success: function (data) {
-                    console.log(data)
-                    let years = Object.keys(data)
-                    let matches = Object.values(data)
-                    // draw chart
-                    $('div').highcharts({
-                        chart: {
-                            type: "bar"
-                        },
-                        title: {
-                            text: "IPL Matches"
-                        },
-                        xAxis: {
-                            categories: years,
-                            type: 'category',
-                            allowDecimals: false,
-                            title: {
-                                text: "Years"
-                            }
-                        },
-                        yAxis: {
-                            title: {
-                                text: "matches"
-                            }
-                        },
-                        series: [{
-                            name: 'Total matches',
-                            data: matches
-                        }]
-                    });
-                }
-            })
-        }
-
-        // fetch("http://localhost:3000").then(response => response.text()).then(data => $('div').text(data))
-        function matchesperseasonplayed() {
-            $.ajax({
-                url: "http://localhost:3000/matchesperseason", // the local Node server
-                //method: 'GET',
-                success: function (data) {
-                    console.log(data)
-                    let xaxis = Object.keys(data)
-                    let yaxis = Object.values(data)
-                    // draw chart
-                    $('div').highcharts({
-                        chart: {
-                            type: 'bar'
-                        },
-                        title: {
-                            text: 'Stacked bar chart'
-                        },
-                        xAxis: {
-                            categories:xaxis,
-                            type: 'category',
-                            allowDecimals: false,
-                            title: {
-                                text: "season"
-                            }
-                        },
-                        yAxis: {
-                            title: {
-                                text: "matches"
-                            }
-                        },
-                        yAxis: {
-                            title: {
-                                text: "Team Names"
-                            }
-                        },
-                        legend: {
-                            reversed: true
-                        },
-                        plotOptions: {
-                            series: {
-                                stacking: 'normal'
-                            }
-                        },
-                        series: [{
-                            name: "total wins per season",
-                            data:yaxis
-                        }]
-
-                    });
-                }
-            })
-
-        }
-
-        function extrarunsin2016() {
-            $.ajax({
-                url: "http://localhost:3000/extrarunsin2016", // the local Node server
-                //method: 'GET',
-                success: function (data) {
-                    console.log(data)
-                    let teams = Object.keys(data)
-                    let extraruns = Object.values(data)
-                    // draw chart
-                    $('div').highcharts({
-                        chart: {
-                            type: "bar"
-                        },
-                        title: {
-                            text: "IPL Matches"
-                        },
-                        xAxis: {
-                            categories: teams,
-                            type: 'category',
-                            allowDecimals: false,
-                            title: {
-                                text: "Team Name"
-                            }
-                        },
-                        yAxis: {
-                            title: {
-                                text: "matches"
-                            }
-                        },
-                        series: [{
-                            name: 'total ExtraRuns',
-                            data: extraruns
-                        }]
-                    });
-                }
-            })
-        }
-
-
-        function ecnomicbowler() {
-            $.ajax({
-                url: "http://localhost:3000/ecnomicbowler", // the local Node server
-                //method: 'GET',
-                success: function (data) {
-                    console.log(data)
-                    let bowler = Object.keys(data)
-                    let economy = Object.values(data)
-                    // draw chart
-                    $('div').highcharts({
-                        chart: {
-                            type: "bar"
-                        },
-                        title: {
-                            text: "IPL Matches"
-                        },
-                        xAxis: {
-                            categories:bowler,
-                            type: 'category',
-                            allowDecimals: false,
-                            title: {
-                                text: "bowler name"
-                            }
-                        },
-                        yAxis: {
-                            title: {
-                                text: "Top Economy"
-                            }
-                        },
-                        series: [{
-                            name: 'top economic bowler',
-                            data: economy
-                        }]
-                    });
-                }
-            })
-        }
-    </script>
 </body>
 
 </html>
