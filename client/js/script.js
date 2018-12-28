@@ -39,14 +39,16 @@ function totalmatches() {
             });
         });
 }
+
 // fetch("http://localhost:3000").then(response => response.text()).then(data => $('div').text(data))
 function matchesperseasonplayed() {
-    $.ajax({
-        url: "http://localhost:3000/matchesperseason", // the local Node server
-        //method: 'GET',
-        success: function (data) {
-            console.log(data)
-            let ar = (Object.values(data)).map((element) => Object.keys((element)));
+    fetch('http://127.0.0.1:3000/matchesperseason')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            console.log(json)
+            let ar = (Object.values(json)).map((element) => Object.keys((element)));
             let teams = [];
             teams = ar.reduce((result, arr) => {
                 arr.map(item => result.push(item))
@@ -58,16 +60,17 @@ function matchesperseasonplayed() {
                 let teamWonMatches = {};
                 teamWonMatches.name = team;
                 let wonMatches = [];
-                for (let year of Object.keys(data)) {
-                    if (!data[year].hasOwnProperty([team])) {
+                for (let year of Object.keys(json)) {
+                    if (!json[year].hasOwnProperty([team])) {
                         wonMatches.push(0);
                     } else {
-                        wonMatches.push(data[year][team]);
+                        wonMatches.push(json[year][team]);
                     }
                 }
                 teamWonMatches.data = wonMatches;
                 seriesData.push(teamWonMatches);
             }
+
             // console.log(Object.keys(data));
             // draw chart
             $('div').highcharts({
@@ -78,7 +81,7 @@ function matchesperseasonplayed() {
                     text: 'Stacked column chart'
                 },
                 xAxis: {
-                    categories: Object.keys(data)
+                    categories: Object.keys(json)
                 },
                 yAxis: {
                     min: 0,
@@ -123,8 +126,8 @@ function matchesperseasonplayed() {
                 series: seriesData
 
             });
-        }
-    })
+
+        });
 
 }
 

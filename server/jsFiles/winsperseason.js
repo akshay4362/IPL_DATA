@@ -1,5 +1,5 @@
 module.exports = {
-    get : function (matches) {
+    matchesperseason : function (matches) {
         let winnersTeam = {};
         matches.forEach((obj) => {
             if (winnersTeam[obj.season] == undefined) {
@@ -10,9 +10,10 @@ module.exports = {
             } else {
                 winnersTeam[obj.season][obj.winner] += 1;
             }
-
+            // console.log(Object.values(data))
         })
         return winnersTeam;
+
 
     }
 }
