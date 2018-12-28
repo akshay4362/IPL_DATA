@@ -67,7 +67,7 @@ function matchesperseasonplayed() {
                 teamWonMatches.data = wonMatches;
                 seriesData.push(teamWonMatches);
             }
-            console.log(Object.keys(data));
+            // console.log(Object.keys(data));
             // draw chart
             $('div').highcharts({
                 chart: {
