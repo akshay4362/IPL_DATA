@@ -1,34 +1,31 @@
 module.exports = {
-    get: function (deliveries) {
-        let totalRunsAndBalls = {};
-        deliveries.forEach(row => {
-            if (!totalRunsAndBalls[row.bowler]) {
-                totalRunsAndBalls[row.bowler] = {};
-                totalRunsAndBalls[row.bowler]['runs_conceded'] = parseInt(row.total_runs);
-                totalRunsAndBalls[row.bowler]['balls_bowled'] = 1;
-            } else {
-                totalRunsAndBalls[row.bowler]['runs_conceded'] += parseInt(row.total_runs);
-                totalRunsAndBalls[row.bowler]['balls_bowled']++;
+    get: function (matches,deliveries) {
+        var idArray_year = [];
+        var idArray_year = matches.filter(obj => obj.season == 2015).map(row => row.id)
+        var arr1 = deliveries
+            .filter(id => idArray_year.includes(id['match_id']))
+        var arr2 = arr1.reduce(function (acc, cur) {
+            acc[cur['bowler']] = (acc[cur['bowler']] || 0) + (parseInt(cur['total_runs']) - parseInt(cur['extra_runs']))
+            return acc;
+        }, {});
+        var arr3 = arr1.reduce(function (acc, cur) {
+            acc[cur['bowler']] = (acc[cur['bowler']] || 0) + 1;
+            return acc;
+        }, {});
+        for (var key in arr2) {
+            arr2[key] = (arr2[key] / (arr3[key] / 6)).toFixed(2);
+        }
 
-            }
-        });
-        let bowlerAndEconomy = {};
-        for (let i in totalRunsAndBalls) {
-            if (totalRunsAndBalls[i]) {
-                bowlerAndEconomy[i] = (totalRunsAndBalls[i].runs_conceded / totalRunsAndBalls[i].balls_bowled) * 6;
-            }
+        var bowlersArr = [];
+        for (economy in arr2) {
+            bowlersArr.push([economy, parseFloat(arr2[economy])]);
         }
-        var sortable = Object.entries(bowlerAndEconomy);
-        sortable.sort(function (a, b) {
-            return a[1] - b[1];
+        bowlersArr.sort(function (bowlersEconomyData1, bowlersEconomyData2) {
+
+            return bowlersEconomyData1[1] - bowlersEconomyData2[1];
         });
-        let topEconomicBolwers = {};
-        let topEconomicArray = (sortable.slice(0, 5));
-        for (let i in topEconomicArray) {
-       topEconomicBolwers[topEconomicArray[i][0]] = topEconomicArray[i][1].toFixed(2);
-        }
-        for(let i in topEconomicBolwers)
-        topEconomicBolwers[i] = parseInt(topEconomicBolwers[i])
-        return topEconomicBolwers
+        return bowlersArr.slice(0, 5);
+
+
     }
 }

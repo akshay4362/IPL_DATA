@@ -1,41 +1,21 @@
 module.exports = {
-    get: function (matches, deliveries) {
+        get: function (matches, deliveries) {
 
-        let ids = [];
-        let extraRuns = {}
-        matches.forEach((obj) => {
-            if (obj.season == 2016) {
-                ids.push(obj.id);
+            // var idArray = [];
+            // for (var i = 0; i <matches.length; i++) {
+            //     if (matches[i].season == 2016) {
+            //         idArray.push(matches[i].id);
+            //     }
+            // }
+            var idArray = matches.filter(obj  => obj.season==2016).map(row=>row.id)
+                  var arr = deliveries.reduce(function (id, id1) {
+                    if (idArray.includes(id1['match_id'])) {
+                        id[id1['batting_team']] = ((id[id1['batting_team']] || 0) + parseInt(id1['extra_runs']));
+                    }
+                    return id;
+                }, {});
+                return arr;
+
             }
 
-        })
-        // console.log(ids)
-        ids.forEach((elem) => {
-            deliveries.forEach((obj) => {
-                if (obj.match_id == elem) {
-                    if (extraRuns.hasOwnProperty([obj.bowling_team])) {
-                        let team = obj.bowling_team;
-                        let extraruns = parseInt(obj.extra_runs);
-                        extraRuns[team] += extraruns;
-                    } else {
-                        team = obj.bowling_team;
-                        extraruns = parseInt(obj.extra_runs);
-                        extraRuns[team] = extraruns;
-                    }
-                    // return console.log(extraRuns);
-                    // if (extraRuns[obj2.bowling_team] == undefined) {
-                    //     extraRuns[obj2.bowling_team][obj2.extra_runs] = {};
-                    // }
-                    // if (extraRuns[obj2.bowling_team][obj2.extra_runs] == undefined) {
-                    //     extraRuns[obj2.bowling_team][obj2.extra_runs] = 1;
-                    // }
-                }
-            })
-        })
-
-
-        return (extraRuns)
-
-    }
-
-}
+        }

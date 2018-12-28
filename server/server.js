@@ -20,5 +20,5 @@ app.get('/numofmatchesplayed', (req, res) => res.send(numOfMatchesPlayed.get(mat
 app.get('/matchesperseason', (req, res) => res.send(matchesperseason.get(matches)));
 app.get('/extrarunsin2016',(req,res) =>res.send(extrarunsin2016.get(matches,deliveries)));
 // console.log(extrarunsin2016.get(matches, deliveries))
-app.get('/ecnomicbowler', (req, res) => res.send(ecnomicbowler.get(deliveries)));
+app.get('/ecnomicbowler', (req, res) => res.send(ecnomicbowler.get(matches,deliveries)));
 app.listen(port, () => console.log(`Example app listening on port  ${port}`))
