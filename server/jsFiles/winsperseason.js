@@ -1,5 +1,5 @@
 module.exports = {
-    get: function (matches) {
+    matchesperseason : function (matches) {
         let winnersTeam = {};
         matches.forEach((obj) => {
             if (winnersTeam[obj.season] == undefined) {
@@ -14,30 +14,5 @@ module.exports = {
         })
         return winnersTeam;
 
-        // let ar = (Object.values(winnersTeam)).map((element) => element.keys((element)));
-        // let teams = [];
-        // teams = ar.reduce((result, arr) => {
-        //     arr.map(item => result.push(item))
-        //     return result
-        // }, [])
-
-        // teams = teams.filter((element, index, arr) => arr.indexOf(element) == index)
-        // let seriesData = [];
-        // for (let team of teams) {
-        //     let teamWonMatches = {};
-        //     teamWonMatches.name = team;
-        //     let wonMatches = [];
-        //     for (let year of Object.keys(data)) {
-        //         if (!data[year].hasOwnProperty([team])) {
-        //             wonMatches.push(0);
-        //         } else {
-        //             wonMatches.push(data[year][team]);
-        //         }
-        //     }
-        //     teamWonMatches.data = wonMatches;
-        //     seriesData.push(teamWonMatches);
-        // }
-
-        // return seriesData
     }
 }

@@ -1,14 +1,17 @@
 totalmatches()
 
 function totalmatches() {
-    $.ajax({
-        url: "http://localhost:3000/numofmatchesplayed", // the local Node server
-        //method: 'GET',
-        success: function (data) {
-            console.log(data)
-            let years = Object.keys(data)
-            let matches = Object.values(data)
+    // console.log("helo");
+    fetch('http://127.0.0.1:3000/numberOfMatchesplayed')
+    .then(function(response){
+        return response.json();
+    })
+        .then(function (json) {
+            console.log(json)
+            var year = Object.keys(json);
+            var val = Object.values(json);
             // draw chart
+            
             $('div').highcharts({
                 chart: {
                     type: "bar"
@@ -17,7 +20,7 @@ function totalmatches() {
                     text: "IPL Matches"
                 },
                 xAxis: {
-                    categories: years,
+                    categories: year,
                     type: 'category',
                     allowDecimals: false,
                     title: {
@@ -31,12 +34,13 @@ function totalmatches() {
                 },
                 series: [{
                     name: 'Total matches',
-                    data: matches
+                    data:val
                 }]
             });
-        }
-    })
+        });
 }
+
+
 
 // fetch("http://localhost:3000").then(response => response.text()).then(data => $('div').text(data))
 function matchesperseasonplayed() {
