@@ -17,8 +17,8 @@ app.use(express.static(__dirname +'/../client'))
 app.get('/numberOfMatchesplayed', function (req, res) { res.json(numOfMatchesPlayed.numOfMatchesPlayed(matches))});
 // console.log(numOfMatchesPlayed.get(matches))
 // console.log(matchesperseason.get(matches))
-app.get('/matchesperseason', function (req, res) { res.json(matchesperseason.matchesperseason(matches))});
-app.get('/extrarunsin2016',(req,res) =>res.send(extrarunsin2016.get(matches,deliveries)));
+app.get('/matchesperseason', (req, res) => res.send(matchesperseason.get(matches)));
+app.get('/extrarunsin2016', function (req, res) { res.json(extrarunsin2016.extrarunsin2016(matches,deliveries))});
 // console.log(extrarunsin2016.get(matches, deliveries))
-app.get('/ecnomicbowler', (req, res) => res.send(ecnomicbowler.get(matches,deliveries)));
+app.get('/ecnomicbowler',function (req, res) { res.json(ecnomicbowler.ecnomicbowler(matches,deliveries))});
 app.listen(port, () => console.log(`Example app listening on port  ${port}`))

@@ -1,5 +1,5 @@
 module.exports = {
-    matchesperseason : function (matches) {
+    get : function (matches) {
         let winnersTeam = {};
         matches.forEach((obj) => {
             if (winnersTeam[obj.season] == undefined) {

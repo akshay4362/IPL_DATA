@@ -3,15 +3,15 @@ totalmatches()
 function totalmatches() {
     // console.log("helo");
     fetch('http://127.0.0.1:3000/numberOfMatchesplayed')
-    .then(function(response){
-        return response.json();
-    })
+        .then(function (response) {
+            return response.json();
+        })
         .then(function (json) {
             console.log(json)
             var year = Object.keys(json);
             var val = Object.values(json);
             // draw chart
-            
+
             $('div').highcharts({
                 chart: {
                     type: "bar"
@@ -34,14 +34,11 @@ function totalmatches() {
                 },
                 series: [{
                     name: 'Total matches',
-                    data:val
+                    data: val
                 }]
             });
         });
 }
-
-
-
 // fetch("http://localhost:3000").then(response => response.text()).then(data => $('div').text(data))
 function matchesperseasonplayed() {
     $.ajax({
@@ -132,13 +129,14 @@ function matchesperseasonplayed() {
 }
 
 function extrarunsin2016() {
-    $.ajax({
-        url: "http://localhost:3000/extrarunsin2016", // the local Node server
-        //method: 'GET',
-        success: function (data) {
-            console.log(data)
-            let teams = Object.keys(data)
-            let extraruns = Object.values(data)
+    fetch('http://127.0.0.1:3000/extrarunsin2016')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            console.log(json)
+            var teams = Object.keys(json);
+            var extraruns = Object.values(json);
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -165,20 +163,19 @@ function extrarunsin2016() {
                     data: extraruns
                 }]
             });
-        }
-    })
+
+        });
 }
 
-
-
 function ecnomicbowler() {
-    $.ajax({
-        url: "http://localhost:3000/ecnomicbowler", // the local Node server
-        //method: 'GET',
-        success: function (data) {
-            console.log(data)
-            let bowler = Object.keys(data)
-            let economy = Object.values(data)
+    fetch('http://127.0.0.1:3000/ecnomicbowler')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            console.log(json)
+            var bowler = Object.keys(json);
+            var ecnomy = Object.values(json);
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -202,9 +199,9 @@ function ecnomicbowler() {
                 },
                 series: [{
                     name: 'top economic bowler',
-                    data: economy
+                    data: ecnomy
                 }]
             });
-        }
-    })
+
+        })
 }

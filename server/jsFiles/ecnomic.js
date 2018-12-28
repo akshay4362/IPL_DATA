@@ -1,5 +1,5 @@
 module.exports = {
-    get: function (matches,deliveries) {
+    ecnomicbowler : function (matches,deliveries) {
         var idArray_year = [];
         var idArray_year = matches.filter(obj => obj.season == 2015).map(row => row.id)
         var arr1 = deliveries
