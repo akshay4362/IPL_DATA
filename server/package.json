@@ -9,12 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "csvtojson": "^2.0.8",
     "express": "^4.16.4",
     "i": "^0.3.6",
-    "nano": "^7.1.1",
-    "package.json": "^2.0.1",
-    "serve-static": "^1.13.2"
+    "package.json": "^2.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"

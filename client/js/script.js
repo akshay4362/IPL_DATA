@@ -48,30 +48,17 @@ function matchesperseasonplayed() {
         })
         .then(function (json) {
             console.log(json)
-            let ar = (Object.values(json)).map((element) => Object.keys((element)));
-            let teams = [];
-            teams = ar.reduce((result, arr) => {
-                arr.map(item => result.push(item))
-                return result
-            }, [])
-            teams = teams.filter((element, index, arr) => arr.indexOf(element) == index)
-            let seriesData = [];
-            for (let team of teams) {
-                let teamWonMatches = {};
-                teamWonMatches.name = team;
-                let wonMatches = [];
-                for (let year of Object.keys(json)) {
-                    if (!json[year].hasOwnProperty([team])) {
-                        wonMatches.push(0);
-                    } else {
-                        wonMatches.push(json[year][team]);
-                    }
-                }
-                teamWonMatches.data = wonMatches;
-                seriesData.push(teamWonMatches);
+            var year = Object.keys(json.year);
+            var teamName = Object.keys(json.wonOverYear)
+            var win = Object.values(json.wonOverYear)
+            var array = {}
+            for (let x in teamName) {
+                array.push({
+                    name: teamName[x],
+                    data: win[x]
+                })
             }
-
-            // console.log(Object.keys(data));
+            // console.log(array)
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -81,7 +68,7 @@ function matchesperseasonplayed() {
                     text: 'Stacked column chart'
                 },
                 xAxis: {
-                    categories: Object.keys(json)
+                    categories: year
                 },
                 yAxis: {
                     min: 0,
@@ -123,12 +110,9 @@ function matchesperseasonplayed() {
                         }
                     }
                 },
-                series: seriesData
-
+                series: win
             });
-
         });
-
 }
 
 function extrarunsin2016() {
@@ -139,7 +123,7 @@ function extrarunsin2016() {
         .then(function (json) {
             console.log(json)
             var teams = Object.keys(json);
-            var extraruns = Object.values(json);
+            var extrarun = Object.values(json);
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -163,12 +147,13 @@ function extrarunsin2016() {
                 },
                 series: [{
                     name: 'total ExtraRuns',
-                    data: extraruns
+                    data: extrarun
                 }]
             });
 
         });
 }
+
 
 function ecnomicbowler() {
     fetch('http://127.0.0.1:3000/ecnomicbowler')
