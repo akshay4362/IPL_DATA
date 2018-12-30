@@ -2,12 +2,12 @@ totalmatches()
 
 function totalmatches() {
     // console.log("helo");
-    fetch('http://127.0.0.1:3000/numberOfMatchesplayed')
+    fetch('http://127.0.0.1:3005/numberOfMatchesplayed')
         .then(function (response) {
             return response.json();
         })
         .then(function (json) {
-            console.log(json)
+            //console.log(json)
             var year = Object.keys(json);
             var val = Object.values(json);
             // draw chart
@@ -40,25 +40,26 @@ function totalmatches() {
         });
 }
 
-// fetch("http://localhost:3000").then(response => response.text()).then(data => $('div').text(data))
+// fetch("http://localhost:3005").then(response => response.text()).then(data => $('div').text(data))
 function matchesperseasonplayed() {
-    fetch('http://127.0.0.1:3000/matchesperseason')
+    fetch('http://127.0.0.1:3005/matchesperseason')
         .then(function (response) {
             return response.json();
         })
         .then(function (json) {
-            console.log(json)
-            var year = Object.keys(json.year);
-            var teamName = Object.keys(json.wonOverYear)
-            var win = Object.values(json.wonOverYear)
-            var array = {}
-            for (let x in teamName) {
+            //console.log((json))
+            var year = json.year;
+            var teamName = Object.keys(json.wonTeamsarr)
+            var win = Object.values(json.wonTeamsarr)
+            var array = [];
+            for (let i in teamName) {
                 array.push({
-                    name: teamName[x],
-                    data: win[x]
+                    name: teamName[i],
+                    data: win[i]
                 })
             }
-            // console.log(array)
+
+             console.log(array)
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -110,13 +111,13 @@ function matchesperseasonplayed() {
                         }
                     }
                 },
-                series: win
+                series:array
             });
         });
 }
 
 function extrarunsin2016() {
-    fetch('http://127.0.0.1:3000/extrarunsin2016')
+    fetch('http://127.0.0.1:3005/extrarunsin2016')
         .then(function (response) {
             return response.json();
         })
@@ -156,7 +157,7 @@ function extrarunsin2016() {
 
 
 function ecnomicbowler() {
-    fetch('http://127.0.0.1:3000/ecnomicbowler')
+    fetch('http://127.0.0.1:3005/ecnomicbowler')
         .then(function (response) {
             return response.json();
         })

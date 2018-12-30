@@ -38,9 +38,11 @@ module.exports = {
          
        
         }
-
-        // var year = Object.keys(wonTeams);
-        return (wonOverYear)
+        var finalObject = {};
+        finalObject.year = Object.keys(wonTeams)
+        finalObject.wonTeamsarr = wonOverYear;
+        //console.log(finalObject);
+        return finalObject;
 
     }
 

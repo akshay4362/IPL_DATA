@@ -7,7 +7,7 @@ var numOfMatchesPlayed = require('./jsFiles/totalmatchesplayed')
 var matchesperseason = require('./jsFiles/winsperseason')
 var extrarunsin2016 = require('./jsFiles/extraruns')
 var ecnomicbowler = require("./jsFiles/ecnomic")
-const port = 3000;
+const port = 3005;
 app.use(cors());
 app.use(express.static(__dirname + '/../client'))
 app.get('/numberOfMatchesplayed', function (req, res) {
