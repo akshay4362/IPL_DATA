@@ -1,13 +1,15 @@
 totalmatches()
 
 function totalmatches() {
-    $.ajax({
-        url: "http://localhost:3000/numofmatchesplayed", // the local Node server
-        //method: 'GET',
-        success: function (data) {
-            console.log(data)
-            let years = Object.keys(data)
-            let matches = Object.values(data)
+    // console.log("helo");
+    fetch('http://127.0.0.1:3000/numofmatchesplayed')
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (json) {
+        //    console.log(data)
+            var year = Object.keys(json);
+            var val = Object.values(json);
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -17,7 +19,7 @@ function totalmatches() {
                     text: "IPL Matches"
                 },
                 xAxis: {
-                    categories: years,
+                    categories: year,
                     type: 'category',
                     allowDecimals: false,
                     title: {
@@ -31,43 +33,32 @@ function totalmatches() {
                 },
                 series: [{
                     name: 'Total matches',
-                    data: matches
+                    data: val
                 }]
             });
-        }
-    })
+        });
 }
 
 // fetch("http://localhost:3000").then(response => response.text()).then(data => $('div').text(data))
 function matchesperseasonplayed() {
-    $.ajax({
-        url: "http://localhost:3000/matchesperseason", // the local Node server
-        //method: 'GET',
-        success: function (data) {
-            console.log(data)
-            let ar = (Object.values(data)).map((element) => Object.keys((element)));
-            let teams = [];
-            teams = ar.reduce((result, arr) => {
-                arr.map(item => result.push(item))
-                return result
-            }, [])
-            teams = teams.filter((element, index, arr) => arr.indexOf(element) == index)
-            let seriesData = [];
-            for (let team of teams) {
-                let teamWonMatches = {};
-                teamWonMatches.name = team;
-                let wonMatches = [];
-                for (let year of Object.keys(data)) {
-                    if (!data[year].hasOwnProperty([team])) {
-                        wonMatches.push(0);
-                    } else {
-                        wonMatches.push(data[year][team]);
-                    }
-                }
-                teamWonMatches.data = wonMatches;
-                seriesData.push(teamWonMatches);
+    fetch('http://127.0.0.1:3000/matchesperseason')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            //console.log((json))
+            var year = json.year;
+            var teamName = Object.keys(json.wonTeamsarr)
+            var win = Object.values(json.wonTeamsarr)
+            var array = [];
+            for (let i in teamName) {
+                array.push({
+                    name: teamName[i],
+                    data: win[i]
+                })
             }
-            // console.log(Object.keys(data));
+
+             console.log(array)
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -77,7 +68,7 @@ function matchesperseasonplayed() {
                     text: 'Stacked column chart'
                 },
                 xAxis: {
-                    categories: Object.keys(data)
+                    categories: year
                 },
                 yAxis: {
                     min: 0,
@@ -119,22 +110,20 @@ function matchesperseasonplayed() {
                         }
                     }
                 },
-                series: seriesData
-
+                series:array
             });
-        }
-    })
-
+        });
 }
 
 function extrarunsin2016() {
-    $.ajax({
-        url: "http://localhost:3000/extrarunsin2016", // the local Node server
-        //method: 'GET',
-        success: function (data) {
-            console.log(data)
-            let teams = Object.keys(data)
-            let extraruns = Object.values(data)
+    fetch('http://127.0.0.1:3000/extrarunsin2016')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            console.log(json)
+            var teams = Object.keys(json);
+            var extrarun = Object.values(json);
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -158,23 +147,23 @@ function extrarunsin2016() {
                 },
                 series: [{
                     name: 'total ExtraRuns',
-                    data: extraruns
+                    data: extrarun
                 }]
             });
-        }
-    })
+
+        });
 }
 
 
-
 function ecnomicbowler() {
-    $.ajax({
-        url: "http://localhost:3000/ecnomicbowler", // the local Node server
-        //method: 'GET',
-        success: function (data) {
-            console.log(data)
-            let bowler = Object.keys(data)
-            let economy = Object.values(data)
+    fetch('http://127.0.0.1:3000/ecnomicbowler')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            console.log(json)
+            var bowler = Object.keys(json.bowlerName);
+            var ecnomy = Object.values(json.bowler_economy);
             // draw chart
             $('div').highcharts({
                 chart: {
@@ -198,9 +187,9 @@ function ecnomicbowler() {
                 },
                 series: [{
                     name: 'top economic bowler',
-                    data: economy
+                    data: ecnomy
                 }]
             });
-        }
-    })
+
+        })
 }
