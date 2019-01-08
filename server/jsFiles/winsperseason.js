@@ -1,49 +1,31 @@
 module.exports = {
     matchesperseason: function (matches) {
-        var teamName = []
-        var year;
-  
+        var teamName = new Set()
+
         let temp = matches.reduce(function (result, row) {
-            result[row.winner] = 0;
-            teamName.push(row.winner);
+            result[row.winner] = 0
             return result;
         }, {})
-        var wonTeams = matches.reduce((wonTeams, row) => {
-            wonTeams[row.season] = (wonTeams[row.season] || { ...temp
-
+        var wonTeams = matches.reduce((wonTeam, row) => {
+            wonTeam[row.season] = (wonTeam[row.season] || { ...temp
             });
-                     wonTeams[row.season][row.winner] += 1;
-            // teamName.push(row.winner);
-            return(wonTeams);
-
+            wonTeam[row.season][row.winner] += 1;
+            row.winner !== "" ? teamName.add(row.winner) : null
+            return (wonTeam);
         }, {});
-         
-         
-        // console.log(wonTeams);
-
-        var wonOverYear = {};
-        teamName = teamName.filter((x, i, a) => a.indexOf(x) == i);
-        for (let i in wonTeams) {
-            teamName.map((name) => {
-                if (name !== '') {
-                    wonOverYear[name] = (wonOverYear[name] || []);
-                    wonOverYear[name].push(wonTeams[i][name]);
-                    // if (wonTeams[i].hasOwnProperty(name))
-                    //     wonOverYear[name].push(wonTeams[i][name]);
-                    // else
-                    //     wonOverYear[name].push(0);
-                }
-
+        // // script
+        var wonOverYear = Object.keys(wonTeams).reduce((year, winners) => {
+            [...teamName].map((name) => {
+                year[name] = year[name] || [];
+                year[name].push(wonTeams[winners][name]);
             })
-         
-       
-        }
+            return year
+        }, {})
+        // console.log(wonOverYear);
         var finalObject = {};
         finalObject.year = Object.keys(wonTeams)
         finalObject.wonTeamsarr = wonOverYear;
-        //console.log(finalObject);
         return finalObject;
-
     }
 
 }

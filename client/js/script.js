@@ -58,7 +58,6 @@ function matchesperseasonplayed() {
                     data: win[i]
                 })
             }
-
              console.log(array)
             // draw chart
             $('div').highcharts({
@@ -164,7 +163,7 @@ function ecnomicbowler() {
         .then(function (json) {
             console.log(json)
             var bowler = Object.keys(json);
-            var ecnomy = Object.values(json);
+            var ecnomy =Object.values(json);
             // draw chart
             $('div').highcharts({
                 chart: {

@@ -1,15 +1,17 @@
 module.exports = {
     extrarunsin2016: function (matches, deliveries) {
-
         var idArray = matches.filter(obj => obj.season == 2016).map(row => row.id)
-        var arr = deliveries.reduce(function (id, id1) {
-            if (idArray.includes(id1['match_id'])) {
-                id[id1['batting_team']] = ((id[id1['batting_team']] || 0) + parseInt(id1['extra_runs']));
+        // console.log(idArray)
+        var extra_runs_in2016 = deliveries.reduce(function (season, deliveriy) {
+            // console.log(season) 
+            if (idArray.includes(deliveriy['match_id']))
+            {
+                season[deliveriy['bowling_team']] = (season[deliveriy['bowling_team']] || 0) + parseInt(deliveriy['extra_runs']);
             }
-            return id;
+            // console.log(season) 
+            return season;
         }, {});
-        return arr;
+        return extra_runs_in2016;
 
     }
-
 }
